@@ -1,4 +1,4 @@
-# Bounce RE
+# <img src="docs/images/bounce-icon.png" alt="" width="30" height="30"> Bounce RE
 
 A native Windows, Linux and macOS port of **Bounce**, the 2002 Nokia J2ME game. Roll
 and bounce a red ball through 11 levels, pass through every hoop to open the
@@ -125,8 +125,8 @@ how the port is organized.
 
 Bounce (2002) lists its vendor as **ANDREW-LVIV / Nokia**. All rights to the
 original game, its name, artwork, sounds and text belong to their respective
-owners. The screenshots show the
-port running. Players supply their own JAR.
+owners. The icon above comes from the original JAR. The screenshots show
+the port running. Players supply their own JAR.
 
 This project is not affiliated with or endorsed by Nokia or ANDREW-LVIV.
 The port's source code is released under the [MIT License](LICENSE).
