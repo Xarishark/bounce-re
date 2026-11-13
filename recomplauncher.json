@@ -3,6 +3,7 @@
   "format": 1,
   "name": "Bounce RE",
   "repo": "Xarishark/bounce-re",
+  "requires": ["start", "start.linux", "setup", "exit_codes", "settings.toml", "settings.choices", "settings.slider", "settings.groups"],
   "inputs": [
     {
       "id": "jar",
@@ -129,6 +130,12 @@
       ],
       "defaults": { "language": "\"xx\"" }
     }
+  ],
+  "groups": [
+    { "id": "Display" },
+    { "id": "Sound" },
+    { "id": "Controls" },
+    { "id": "Game" }
   ],
   "saves": ["{install}/save"],
   "folders": {

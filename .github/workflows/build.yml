@@ -51,9 +51,12 @@ jobs:
         run: |
           rustup update stable
           cargo +stable build --release --locked
-          tar -czf bounce-linux-x64.tar.gz -C target/release bounce
+          # recomplauncher.json sits next to the program at the top of the archive
+          version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)
+          mkdir -p stage && cp target/release/bounce recomplauncher.json LICENSE stage/
+          tar -czf "BounceRE-v$version-Linux-x64.tar.gz" -C stage .
       - uses: actions/upload-artifact@v4
         with:
           name: linux-x64
-          path: bounce-linux-x64.tar.gz
+          path: BounceRE-*-Linux-x64.tar.gz
           if-no-files-found: error

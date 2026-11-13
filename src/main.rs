@@ -436,7 +436,7 @@ fn setup_screen(
         let mut try_jar: Option<PathBuf> = None;
         let mut browse = false;
         for ev in events.poll_iter() {
-            // any controller: Fire / A or the left soft key picks a file, B / Start quits
+            // any controller: Fire / A (Cross) or the left soft key picks a file, B / Start quits
             for a in pads.handle(sub, &ev) {
                 match a {
                     PadAction::Press(_, K_FIRE | K_SOFT_L) => browse = true,
@@ -501,6 +501,15 @@ fn setup_screen(
     }
 }
 
+/// The confirm button as the player knows it: RecompLauncher tells us the
+/// controller family (RECOMPLAUNCHER_PAD = xbox | playstation).
+fn pad_button() -> &'static str {
+    match std::env::var("RECOMPLAUNCHER_PAD").as_deref() {
+        Ok("playstation") => "Cross",
+        _ => "A",
+    }
+}
+
 fn draw_setup(g: &mut Surface, status: &Option<(String, bool)>) {
     use gfx::{HCENTER, LEFT, RIGHT, TOP};
     const BG: i32 = 0xB0E0F0;
@@ -527,7 +536,7 @@ fn draw_setup(g: &mut Surface, status: &Option<(String, bool)>) {
     y += 3;
     match status {
         Some((text, err)) => para(g, text, if *err { 0xC8201C } else { 0x1C7A20 }, &mut y),
-        None => para(g, "Drop it on this window, or press Fire / A to pick it.", TEXT, &mut y),
+        None => para(g, &format!("Drop it on this window, or press Fire / {} to pick it.", pad_button()), TEXT, &mut y),
     }
     g.set_color(BAR);
     g.fill_rect(0, 116, 128, 12);

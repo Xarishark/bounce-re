@@ -24,19 +24,20 @@ included here or in the releases.
    [Releases](https://github.com/Xarishark/bounce-re/releases) and unzip it
    somewhere you can write to (not Program Files).
 2. Run `Bounce.exe`. On the first start it asks for the JAR: drop it on the
-   window, or press Fire / A to pick it. (A JAR placed next to the exe, or
+   window, or press Fire / A (Cross) to pick it. (A JAR placed next to the exe, or
    `--game <path>`, works too.)
 3. The game checks the file and unpacks its art, levels, sounds and text
    into `data/`. From then on it starts straight into the game.
 
 ### RecompLauncher
 
-Bounce RE comes with a `recomplauncher.json` for
-[RecompLauncher](https://recomplauncher.com): the launcher can install it
-from this repo's releases, ask for your JAR on its setup screen and unpack it
-with the game's own setup step, show the settings on the game's page, back
-up your saves, and attach the log to crash reports. Big Picture mode starts
-the game full screen.
+Bounce RE supports [RecompLauncher](https://recomplauncher.com) fully
+(`recomplauncher.json`, levels 1 to 3): the launcher installs and updates it
+from this repo's releases, asks for your JAR on its setup screen and
+unpacks it with the game's own setup step, shows the settings on the
+game's page, backs up your saves, and attaches the log to crash reports.
+Big Picture mode starts the game full screen, and button hints follow the
+controller type the launcher reports.
 
 ## Controls
 
