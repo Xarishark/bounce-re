@@ -48,7 +48,7 @@ controller type the launcher reports.
 | Menu (pause) | Esc, Tab | B, Start, Y, Back |
 | Menus: move / select | Up / Down, Enter | D-pad, A |
 | Phone keypad (cheat codes) | 0-9 | |
-| Full screen | F11, Alt+Enter | |
+| Full screen | F, F11, Alt+Enter | |
 | Mute / volume | M, + / - | |
 
 In the main menu, Back (Esc / B) quits; your game is saved and "Continue"

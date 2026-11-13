@@ -43,7 +43,7 @@ Usage: bounce [options]
   --headless --script <file> --out <dir>   run a test script without a window
 
 Keyboard: arrows/WASD move, Up/W/Space jump, Enter/Space select,
-  Esc/Tab menu, 0-9 phone keypad, M mute, +/- volume, F11 full screen.
+  Esc/Tab menu, 0-9 phone keypad, M mute, +/- volume, F / F11 full screen.
 Gamepad: D-pad/left stick move, A/X jump/select, B/Start/Y/Back menu.
 
 Settings: settings.toml next to the game. Saves: save/. Logs: logs/.";
@@ -637,7 +637,7 @@ fn run(o: &Opts, s: &Settings, data: &Path, g: &mut Surface, font: &Rc<font::Fon
                 Event::KeyDown { keycode: Some(k), keymod, repeat, scancode, .. } => {
                     use sdl3::keyboard::{Keycode, Mod};
                     let alt = keymod.intersects(Mod::LALTMOD | Mod::RALTMOD);
-                    if k == Keycode::F11 || (alt && k == Keycode::Return) {
+                    if k == Keycode::F11 || k == Keycode::F || (alt && k == Keycode::Return) {
                         if !repeat {
                             let w = canvas.window_mut();
                             let fs = !matches!(w.fullscreen_state(), sdl3::video::FullscreenType::Off);

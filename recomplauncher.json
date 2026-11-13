@@ -43,7 +43,7 @@
     {
       "id": "fullscreen",
       "label": "Full screen",
-      "help": "Start in full screen. F11 switches while playing. Big Picture mode always starts full screen.",
+      "help": "Start in full screen. F or F11 switches while playing. Big Picture mode always starts full screen.",
       "group": "Display",
       "choices": [
         { "label": "Off", "set": { "fullscreen": "false" } },
