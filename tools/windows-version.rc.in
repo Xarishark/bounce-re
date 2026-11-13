@@ -1,0 +1,27 @@
+#include <winver.h>
+
+1 VERSIONINFO
+FILEVERSION @NUMERIC_VERSION@
+PRODUCTVERSION @NUMERIC_VERSION@
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "@AUTHOR@"
+            VALUE "FileDescription", "Bounce RE"
+            VALUE "FileVersion", "@VERSION@"
+            VALUE "InternalName", "bounce"
+            VALUE "LegalCopyright", "Copyright (c) 2026 @AUTHOR@"
+            VALUE "OriginalFilename", "Bounce.exe"
+            VALUE "ProductName", "Bounce RE"
+            VALUE "ProductVersion", "@VERSION@"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1200
+    END
+END
