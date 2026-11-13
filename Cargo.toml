@@ -1,6 +1,6 @@
 [package]
 name = "bounce-re"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Zacharias Xenakis (Xarishark)"]
 edition = "2021"
 description = "Bounce RE: native PC port of the 2002 Nokia J2ME game Bounce"
