@@ -1,0 +1,149 @@
+{
+  "$schema": "https://recomplauncher.com/schema/recomplauncher.json",
+  "format": 1,
+  "name": "Bounce RE",
+  "repo": "Xarishark/bounce-re",
+  "inputs": [
+    {
+      "id": "jar",
+      "label": "Your copy of Bounce for Nokia (128x128, version 1.9): Bounce.jar",
+      "role": "game",
+      "formats": [{ "type": "file", "extensions": ["jar"] }]
+    }
+  ],
+  "start": {
+    "program": ["Bounce.exe", "bounce"],
+    "args": ["--game", "{input:jar}"]
+  },
+  "prepare": {
+    "program": ["Bounce.exe", "bounce"],
+    "args": ["--prepare", "--game", "{input:jar}"],
+    "label": "Art, levels, sounds and text from your JAR",
+    "timeout": 60
+  },
+  "config": [
+    {
+      "id": "main",
+      "format": "toml",
+      "file": [{ "path": "{install}/settings.toml" }],
+      "new": {
+        "scale": "5",
+        "fullscreen": "false",
+        "scaling": "\"sharp\"",
+        "volume": "100",
+        "sound": "true",
+        "rumble": "true",
+        "language": "\"xx\"",
+        "background_input": "false"
+      }
+    }
+  ],
+  "settings": [
+    {
+      "id": "fullscreen",
+      "label": "Full screen",
+      "help": "Start in full screen. F11 switches while playing. Big Picture mode always starts full screen.",
+      "group": "Display",
+      "choices": [
+        { "label": "Off", "set": { "fullscreen": "false" } },
+        { "label": "On", "set": { "fullscreen": "true" } }
+      ],
+      "defaults": { "fullscreen": "false" }
+    },
+    {
+      "id": "scale",
+      "label": "Window size",
+      "help": "The window at start, in multiples of the phone's 128x128 screen.",
+      "group": "Display",
+      "when": { "fullscreen": "false" },
+      "choices": [
+        { "label": "3x (384)", "set": { "scale": "3" } },
+        { "label": "4x (512)", "set": { "scale": "4" } },
+        { "label": "5x (640)", "set": { "scale": "5" } },
+        { "label": "6x (768)", "set": { "scale": "6" } },
+        { "label": "8x (1024)", "set": { "scale": "8" } }
+      ],
+      "defaults": { "scale": "5" }
+    },
+    {
+      "id": "scaling",
+      "label": "Scaling",
+      "help": "Sharp keeps every pixel the same size, with borders. Fill makes the picture as large as fits.",
+      "group": "Display",
+      "choices": [
+        { "label": "Sharp", "set": { "scaling": "\"sharp\"" } },
+        { "label": "Fill", "set": { "scaling": "\"fill\"" } }
+      ],
+      "defaults": { "scaling": "\"sharp\"" }
+    },
+    {
+      "id": "sound",
+      "label": "Sound",
+      "help": "The phone's beeps for hoops, pickups and popping. M switches them while playing.",
+      "group": "Sound",
+      "choices": [
+        { "label": "On", "set": { "sound": "true" } },
+        { "label": "Off", "set": { "sound": "false" } }
+      ],
+      "defaults": { "sound": "true" }
+    },
+    {
+      "id": "volume",
+      "label": "Volume",
+      "group": "Sound",
+      "when": { "sound": "true" },
+      "slider": { "key": "volume", "min": 0, "max": 100, "step": 5, "format": "%d" },
+      "defaults": { "volume": "100" }
+    },
+    {
+      "id": "rumble",
+      "label": "Rumble",
+      "help": "The controller rumbles when the ball pops.",
+      "group": "Controls",
+      "choices": [
+        { "label": "On", "set": { "rumble": "true" } },
+        { "label": "Off", "set": { "rumble": "false" } }
+      ],
+      "defaults": { "rumble": "true" }
+    },
+    {
+      "id": "background_input",
+      "label": "Controller in the background",
+      "help": "Keep reading the controller while another window is in front.",
+      "group": "Controls",
+      "advanced": true,
+      "choices": [
+        { "label": "Off", "set": { "background_input": "false" } },
+        { "label": "On", "set": { "background_input": "true" } }
+      ],
+      "defaults": { "background_input": "false" }
+    },
+    {
+      "id": "language",
+      "label": "Language",
+      "help": "The game's text. Both come from the original game.",
+      "group": "Game",
+      "choices": [
+        { "label": "English", "set": { "language": "\"xx\"" } },
+        { "label": "Filipino", "set": { "language": "\"tl-PH\"" } }
+      ],
+      "defaults": { "language": "\"xx\"" }
+    }
+  ],
+  "saves": ["{install}/save"],
+  "folders": {
+    "saves": [{ "path": "{install}/save" }],
+    "logs": [{ "path": "{install}/logs" }]
+  },
+  "actions": [
+    { "id": "saves", "label": "Saves", "help": "Your saved game, best level and high score.", "open": "saves" },
+    { "id": "logs", "label": "Logs", "help": "The last three runs, for bug reports.", "open": "logs" }
+  ],
+  "exit_codes": {
+    "2": "Couldn't read your Bounce JAR. Pick it again on the game's page.",
+    "3": "That file isn't the supported Bounce. It needs the Nokia 128x128 release of Bounce 1.9, Bounce.jar.",
+    "4": "The game can't write to its folder. Install it somewhere you can write to.",
+    "5": "The game isn't set up yet. Pick your Bounce.jar on the game's page."
+  },
+  "looks": { "lines": 128 }
+}
