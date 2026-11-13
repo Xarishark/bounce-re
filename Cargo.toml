@@ -20,17 +20,13 @@ png = "0.18"
 zip = { version = "9", default-features = false, features = ["deflate-flate2"] }
 sha2 = "0.10"
 embedded-graphics = "0.8"
+# SDL3 is built from source and linked statically on every system, so the
+# release is one self-contained program (SDL still loads X11/Wayland, audio
+# and so on from the system at run time).
+sdl3 = { version = "0.22", features = ["build-from-source-static"] }
 
 [profile.release]
 opt-level = 3
 lto = true
 codegen-units = 1
 panic = "abort"
-
-# Windows builds link SDL3 statically (single .exe); other platforms use the
-# system SDL3 library.
-[target.'cfg(windows)'.dependencies]
-sdl3 = { version = "0.22", features = ["build-from-source-static"] }
-
-[target.'cfg(not(windows))'.dependencies]
-sdl3 = { version = "0.22" }
