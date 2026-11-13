@@ -1,0 +1,5 @@
+# Normalize text to LF in the repository
+* text=auto eol=lf
+
+# Screenshots in docs/
+*.png binary

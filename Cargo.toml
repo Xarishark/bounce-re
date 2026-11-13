@@ -1,0 +1,36 @@
+[package]
+name = "bounce-re"
+version = "1.0.0"
+edition = "2021"
+description = "Bounce RE: native PC port of the 2002 Nokia J2ME game Bounce"
+license = "MIT"
+repository = "https://github.com/Xarishark/bounce-re"
+readme = "README.md"
+keywords = ["game", "port", "j2me", "sdl3", "reverse-engineering"]
+categories = ["games"]
+publish = false
+
+[[bin]]
+name = "bounce"
+path = "src/main.rs"
+
+[dependencies]
+png = "0.18"
+# reading the player's JAR on first start
+zip = { version = "9", default-features = false, features = ["deflate-flate2"] }
+sha2 = "0.10"
+embedded-graphics = "0.8"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+
+# Windows builds link SDL3 statically (single .exe); other platforms use the
+# system SDL3 library.
+[target.'cfg(windows)'.dependencies]
+sdl3 = { version = "0.22", features = ["build-from-source-static"] }
+
+[target.'cfg(not(windows))'.dependencies]
+sdl3 = { version = "0.22" }
