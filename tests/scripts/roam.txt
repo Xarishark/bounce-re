@@ -1,0 +1,50 @@
+# Invincible (7 8 7 8 9 8), then roll and bounce through every level to shake out crashes.
+wait 1500
+tap fire
+wait 300
+tap 7; tap 8; tap 7; tap 8; tap 9; tap 9
+tap 7; tap 8; tap 7; tap 8; tap 9; tap 8
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam1
+shot roam1.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam2
+shot roam2.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam3
+shot roam3.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam4
+shot roam4.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam5
+shot roam5.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam6
+shot roam6.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam7
+shot roam7.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam8
+shot roam8.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam9
+shot roam9.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam10
+shot roam10.png
+tap 3; wait 300
+press right; press up; wait 6000; release right; press left; wait 4000; release left; release up
+stat roam11
+shot roam11.png
+tap 3; wait 300

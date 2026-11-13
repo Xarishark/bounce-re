@@ -1,0 +1,59 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    name: Build Windows x64
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up MinGW and Rust
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++-mingw-w64-x86-64
+          rustup update stable
+          rustup default stable
+          rustup target add x86_64-pc-windows-gnu
+      - name: Build Windows release
+        run: bash tools/package-release.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-x64
+          path: dist/BounceRE-*-Windows-x64.zip
+          if-no-files-found: error
+
+  linux:
+    name: Build Linux x64
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up SDL3
+        id: sdl
+        uses: libsdl-org/setup-sdl@afd98199e97f9c2aa739474be7e0886d149a5e47
+        with:
+          version: 3.4.20
+          build-type: Release
+          install-linux-dependencies: true
+      - name: Build Linux release
+        env:
+          LIBRARY_PATH: ${{ steps.sdl.outputs.prefix }}/lib
+          PKG_CONFIG_PATH: ${{ steps.sdl.outputs.prefix }}/lib/pkgconfig
+        run: |
+          rustup update stable
+          cargo +stable build --release --locked
+          tar -czf bounce-linux-x64.tar.gz -C target/release bounce
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-x64
+          path: bounce-linux-x64.tar.gz
+          if-no-files-found: error

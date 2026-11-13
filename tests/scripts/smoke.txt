@@ -1,0 +1,23 @@
+# Splash, main menu, start a new game, roll right and jump.
+wait 300
+shot 01-splash.png
+wait 1200
+shot 02-menu.png
+stat menu
+tap fire
+wait 500
+shot 03-level1.png
+stat start
+press right
+wait 1500
+stat right
+press up
+wait 400
+release up
+wait 800
+release right
+shot 04-moved.png
+stat moved
+tap softr
+wait 200
+shot 05-pause-menu.png

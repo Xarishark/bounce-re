@@ -1,0 +1,18 @@
+# Play a little, quit from the menu (the game is saved), start again and continue.
+wait 1500
+tap fire
+wait 300
+press right
+wait 1500
+release right
+wait 500
+stat before-quit
+tap softr
+wait 100
+restart
+wait 1500
+shot 01-menu-with-continue.png
+tap fire
+wait 200
+stat after-continue
+shot 02-continued.png

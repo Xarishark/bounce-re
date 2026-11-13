@@ -1,0 +1,18 @@
+# Unlock the level cheat (7 8 7 8 9 9) and load every level with key 3.
+wait 1500
+tap fire
+wait 300
+tap 7; tap 8; tap 7; tap 8; tap 9; tap 9
+shot 01.png
+stat level
+tap 3; wait 300; shot 02.png; stat level
+tap 3; wait 300; shot 03.png; stat level
+tap 3; wait 300; shot 04.png; stat level
+tap 3; wait 300; shot 05.png; stat level
+tap 3; wait 300; shot 06.png; stat level
+tap 3; wait 300; shot 07.png; stat level
+tap 3; wait 300; shot 08.png; stat level
+tap 3; wait 300; shot 09.png; stat level
+tap 3; wait 300; shot 10.png; stat level
+tap 3; wait 300; shot 11.png; stat level
+tap 3; wait 300; stat wrapped
