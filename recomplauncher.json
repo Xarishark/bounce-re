@@ -3,7 +3,7 @@
   "format": 1,
   "name": "Bounce RE",
   "repo": "Xarishark/bounce-re",
-  "requires": ["start", "start.linux", "setup", "exit_codes", "settings.toml", "settings.choices", "settings.slider", "settings.groups"],
+  "requires": ["start", "start.linux", "start.macos", "setup", "exit_codes", "settings.toml", "settings.choices", "settings.slider", "settings.groups"],
   "inputs": [
     {
       "id": "jar",

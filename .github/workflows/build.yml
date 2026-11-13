@@ -3,6 +3,7 @@ name: Build
 on:
   push:
     branches: [main]
+    tags: ["v*"]
   pull_request:
     branches: [main]
   merge_group:
@@ -20,12 +21,12 @@ jobs:
       - name: Set up MinGW and Rust
         run: |
           sudo apt-get update
-          sudo apt-get install -y g++-mingw-w64-x86-64
+          sudo apt-get install -y g++-mingw-w64-x86-64 cmake ninja-build
           rustup update stable
           rustup default stable
           rustup target add x86_64-pc-windows-gnu
       - name: Build Windows release
-        run: bash tools/package-release.sh
+        run: bash tools/package-release.sh windows
       - uses: actions/upload-artifact@v4
         with:
           name: windows-x64
@@ -34,29 +35,67 @@ jobs:
 
   linux:
     name: Build Linux x64
-    runs-on: ubuntu-24.04
+    # the oldest supported runner, so the program runs on older glibc too
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Set up SDL3
-        id: sdl
-        uses: libsdl-org/setup-sdl@afd98199e97f9c2aa739474be7e0886d149a5e47
-        with:
-          version: 3.4.20
-          build-type: Release
-          install-linux-dependencies: true
-      - name: Build Linux release
-        env:
-          LIBRARY_PATH: ${{ steps.sdl.outputs.prefix }}/lib
-          PKG_CONFIG_PATH: ${{ steps.sdl.outputs.prefix }}/lib/pkgconfig
+      - name: Set up SDL3 build dependencies and Rust
+        # SDL is linked statically; these headers let it load X11, Wayland,
+        # audio, controllers and so on from the player's system at run time
         run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build pkg-config \
+            libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev \
+            libxss-dev libxtst-dev libxkbcommon-dev libwayland-dev libdecor-0-dev \
+            libegl1-mesa-dev libgl1-mesa-dev libgles2-mesa-dev libdrm-dev libgbm-dev \
+            libasound2-dev libpulse-dev libpipewire-0.3-dev \
+            libdbus-1-dev libibus-1.0-dev libudev-dev
           rustup update stable
-          cargo +stable build --release --locked
-          # recomplauncher.json sits next to the program at the top of the archive
-          version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)
-          mkdir -p stage && cp target/release/bounce recomplauncher.json LICENSE stage/
-          tar -czf "BounceRE-v$version-Linux-x64.tar.gz" -C stage .
+          rustup default stable
+      - name: Test
+        run: cargo test --release --locked
+      - name: Build Linux release
+        run: bash tools/package-release.sh linux
       - uses: actions/upload-artifact@v4
         with:
           name: linux-x64
-          path: BounceRE-*-Linux-x64.tar.gz
+          path: dist/BounceRE-*-Linux-x64.tar.gz
           if-no-files-found: error
+
+  macos:
+    name: Build macOS arm64
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Rust
+        run: |
+          rustup update stable
+          rustup default stable
+      - name: Build macOS release
+        run: bash tools/package-release.sh macos
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-arm64
+          path: dist/BounceRE-*-macOS-arm64.zip
+          if-no-files-found: error
+
+  release:
+    name: Publish release
+    # only for a pushed version tag, e.g. v1.0.0
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [windows, linux, macos]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: assets
+          merge-multiple: true
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" assets/* --repo "$GITHUB_REPOSITORY" \
+            --title "Bounce RE ${TAG#v}" --generate-notes

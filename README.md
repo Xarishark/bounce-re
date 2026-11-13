@@ -1,6 +1,6 @@
 # Bounce RE
 
-A native Windows/Linux port of **Bounce**, the 2002 Nokia J2ME game. Roll
+A native Windows, Linux and macOS port of **Bounce**, the 2002 Nokia J2ME game. Roll
 and bounce a red ball through 11 levels, pass through every hoop to open the
 exit, and watch out for spikes. Inflators make the ball big enough to float
 in water; deflators shrink it back.
@@ -20,11 +20,14 @@ You need your own copy of the original game: **`Bounce.jar`**, the Nokia
 `3fad7bc2b82e7ddeaffbbb205a239897b1380829abc557c7ae6909a0245179c6`). It isn't
 included here or in the releases.
 
-1. Download `BounceRE-v…-Windows-x64.zip` from
-   [Releases](https://github.com/Xarishark/bounce-re/releases) and unzip it
-   somewhere you can write to (not Program Files).
-2. Run `Bounce.exe`. On the first start it asks for the JAR: drop it on the
-   window, or press Fire / A (Cross) to pick it. (A JAR placed next to the exe, or
+1. Download your system's build from
+   [Releases](https://github.com/Xarishark/bounce-re/releases)
+   (`BounceRE-v…-Windows-x64.zip`, `-Linux-x64.tar.gz` or `-macOS-arm64.zip`)
+   and unpack it somewhere you can write to (not Program Files).
+2. Run `Bounce.exe` (`bounce` on Linux and macOS; the Mac build isn't
+   signed, so the first time right-click it and choose Open). On the first
+   start it asks for the JAR: drop it on the window, or press Fire / A
+   (Cross) to pick it. (A JAR placed next to the program, or
    `--game <path>`, works too.)
 3. The game checks the file and unpacks its art, levels, sounds and text
    into `data/`. From then on it starts straight into the game.
@@ -92,20 +95,26 @@ physics, collision, scrolling and levels. A few things changed for a PC:
 
 ## Building
 
-A recent stable Rust toolchain and SDL3. Building doesn't need the game;
-running it does. On Linux, install the SDL3 development package and:
+A recent stable Rust toolchain and CMake. SDL3 is built from source and
+linked statically, so the program needs nothing else installed. Building
+doesn't need the game; running it does. On Linux, install the X11, Wayland
+and audio development headers SDL uses (the list is in
+`.github/workflows/build.yml`), then:
 
 ```bash
 cargo build --release
 ```
 
-The Windows `.exe` is cross-compiled from Linux with MinGW (`mingw64-gcc`,
-`cmake`, `ninja`); SDL3 is built from source and linked statically:
+Release archives come from `tools/package-release.sh windows|linux|macos`.
+The Windows `.exe` is cross-compiled from Linux with MinGW (`mingw64-gcc`):
 
 ```bash
 rustup target add x86_64-pc-windows-gnu
-tools/package-release.sh      # dist/BounceRE-v<version>-Windows-x64.zip
+tools/package-release.sh windows   # dist/BounceRE-v<version>-Windows-x64.zip
 ```
+
+CI builds all three on every push and pull request; pushing a `v*` tag
+publishes them as a GitHub release.
 
 `tools/run-tests.sh` plays the game headless with the scripts in
 `tests/scripts/` and saves screenshots; it needs your JAR in `game-files/`
